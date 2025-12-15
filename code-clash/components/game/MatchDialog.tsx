@@ -9,7 +9,7 @@ import { useGameStore } from "@/store/useGameStore";
 
 export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     const router = useRouter();
-    const { setRoomCode: setGlobalRoomCode } = useGameStore();
+    const { setRoomCode: setGlobalRoomCode, userDisplayName } = useGameStore();
 
     const [mode, setMode] = useState<'menu' | 'create' | 'join'>('menu');
     const [roomCode, setRoomCode] = useState("");
@@ -17,23 +17,24 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
 
     // --- SOCKET EVENT LISTENERS ---
     useEffect(() => {
-        // BUG FIX: We removed "if (!socket.connected) return;"
-        // Listeners must be active BEFORE we attempt to join.
-
+        // Function to run when an opponent joins the room (Host side)
         function onUserJoined() {
             toast.success("Player Joined! Starting Match...");
             // As a host, we use the state 'roomCode'
             setTimeout(() => {
                 router.push(`/arena?room=${roomCode}`);
+                onClose();
             }, 500);
         }
 
+        // Function to run when successfully joined a room (Joiner side)
         function onJoinSuccess(code: string) {
             toast.success("Successfully Joined!");
             setGlobalRoomCode(code);
             // As a joiner, we use the code returned from server
             setTimeout(() => {
                 router.push(`/arena?room=${code}`);
+                onClose();
             }, 500);
         }
 
@@ -53,18 +54,20 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
             socket.off("join_success", onJoinSuccess);
             socket.off("join_error", onJoinError);
         };
-    }, [roomCode, router, setGlobalRoomCode]); // Dependencies
+    }, [roomCode, router, setGlobalRoomCode, onClose]); // Dependencies
 
     // --- ACTIONS ---
 
     const createRoom = () => {
         setIsLoading(true);
+        // Generates a 6-character alphanumeric code
         const code = Math.random().toString(36).substring(2, 8).toUpperCase();
         setRoomCode(code);
 
         if (!socket.connected) socket.connect();
 
-        socket.emit("create_room", code);
+        // Emit create_room event to the server
+        socket.emit("create_room", { roomCode: code, displayName: userDisplayName });
         setGlobalRoomCode(code);
 
         setTimeout(() => {
@@ -76,7 +79,7 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
 
     const handleJoin = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!roomCode) return;
+        if (!roomCode || roomCode.length < 6) return;
 
         setIsLoading(true);
 
@@ -84,12 +87,17 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
         if (!socket.connected) socket.connect();
 
         // Emit and wait for useEffect listeners to catch the response
-        socket.emit("join_room", roomCode);
+        socket.emit("join_room", { roomCode, displayName: userDisplayName });
     };
 
     const startTestMode = () => {
         setIsLoading(true);
-        router.push('/arena?mode=test');
+        // Reset room code to ensure it's treated as diagnostic mode
+        setGlobalRoomCode(null);
+        setTimeout(() => {
+            router.push('/arena?mode=test');
+            onClose();
+        }, 200);
     };
 
     const copyToClipboard = async () => {
@@ -123,7 +131,7 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
                 <div className="p-6 md:p-8">
                     {mode === 'menu' && (
                         <div className="grid gap-4">
-                            <button onClick={createRoom} className="flex items-center justify-between p-6 rounded-lg border-2 border-border bg-card hover:border-primary/50 hover:bg-secondary/20 transition-all group text-left">
+                            <button onClick={createRoom} className="flex items-center justify-between p-6 rounded-lg border-2 border-border bg-card hover:border-primary/50 hover:bg-secondary/20 transition-all group text-left" disabled={isLoading}>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                                         <Users className="w-6 h-6" />
@@ -133,7 +141,7 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
                                         <div className="text-xs text-muted-foreground font-mono mt-1">HOST_PROTOCOL://PRIVATE</div>
                                     </div>
                                 </div>
-                                <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                                {isLoading && mode === 'menu' ? <Loader2 className="w-5 h-5 animate-spin text-primary" /> : <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />}
                             </button>
 
                             <button onClick={() => setMode('join')} className="flex items-center justify-between p-6 rounded-lg border-2 border-border bg-card hover:border-primary/50 hover:bg-secondary/20 transition-all group text-left">
@@ -188,7 +196,7 @@ export default function MatchDialog({ isOpen, onClose }: { isOpen: boolean; onCl
                             </div>
                             <div className="flex gap-3">
                                 <button type="button" onClick={() => setMode('menu')} className="flex-1 py-4 rounded-lg border border-border font-bold text-muted-foreground hover:bg-muted/50 transition-all">Back</button>
-                                <button type="submit" disabled={isLoading || roomCode.length < 3} className="flex-[2] py-4 bg-primary text-primary-foreground rounded-lg font-bold hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg">
+                                <button type="submit" disabled={isLoading || roomCode.length < 6} className="flex-[2] py-4 bg-primary text-primary-foreground rounded-lg font-bold hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg">
                                     {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Connect'}
                                 </button>
                             </div>

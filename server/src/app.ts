@@ -2,10 +2,10 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-import dotenv from "dotenv";
+import dotenv from "dotenv"; // Import dotenv
 import { setupSocket } from "./socket";
 
-dotenv.config();
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 const httpServer = createServer(app);

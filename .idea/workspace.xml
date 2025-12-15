@@ -11,10 +11,7 @@
       <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/hooks/useCryptoData.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/lib/utils.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/tailwind.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/socket.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Fullstack 5th sem/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/auth.controller.js" afterDir="false" />
@@ -88,14 +85,15 @@
       <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-dashboard.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-registration.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-registration.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-clash/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-clash/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code-clash/components/game/Arena.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/components/game/Arena.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code-clash/components/game/MatchDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/components/game/MatchDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-clash/lib/socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/lib/socket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code-clash/store/useGameStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/store/useGameStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code-clash/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/socket.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sentinel/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sentinel/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sentinel/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/app/page.tsx" afterDir="false" />
@@ -169,7 +167,7 @@
       <workItem from="1765815363192" duration="1857000" />
       <workItem from="1765817929453" duration="6815000" />
       <workItem from="1765825275430" duration="241000" />
-      <workItem from="1765825556004" duration="4205000" />
+      <workItem from="1765825556004" duration="5788000" />
     </task>
     <servers />
   </component>

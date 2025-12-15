@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
 import { useSearchParams } from 'next/navigation';
 import {
     ChevronLeft, Play, Send, Clock, ChevronDown, Check,
-    Signal, Laptop2
+    Signal, Laptop2, Loader2, Award
 } from 'lucide-react';
 import Link from 'next/link';
 import { socket } from '@/lib/socket';
-import { useGameStore } from '@/store/useGameStore';
+import { useGameStore, PROBLEM_SET } from '@/store/useGameStore'; // Import PROBLEM_SET
 
 // --- Mock Data ---
 const LEADERBOARD = [
@@ -27,24 +27,43 @@ const LANGUAGES = [
     { id: 'python', name: 'PYTHON 3.8', icon: 'PY' },
 ];
 
-const BOILERPLATES: Record<string, string> = {
-    javascript: `function solution(s) {\n  // JavaScript Solution\n  return s.reverse();\n}`,
-    cpp: `#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    void reverseString(vector<char>& s) {\n        // C++ Solution\n    }\n};`,
-    java: `class Solution {\n    public void reverseString(char[] s) {\n        // Java Solution\n    }\n}`,
-    python: `class Solution:\n    def reverseString(self, s: List[str]) -> None:\n        """\n        Do not return anything, modify s in-place instead.\n        """\n        pass`,
+// Helper function to format seconds into MM:SS
+const formatTime = (totalSeconds: number) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 };
 
+// Mock check for a "passing" solution. In a real app, this would be a full code execution sandbox.
+const isMockSolutionCorrect = (code: string) => {
+    // Arbitrary check for demonstration purposes - assume solution is correct if it includes a common keyword
+    return code.toLowerCase().includes('function') || code.toLowerCase().includes('class');
+}
+
 export default function Arena() {
+    // Fetched all required state and actions from the store
+    const {
+        code, setCode,
+        roomCode, setRoomCode,
+        output, setOutput,
+        isRunning, setRunning,
+        currentProblem, setCurrentProblem,
+        winnerId, setWinnerId,
+        userDisplayName
+    } = useGameStore();
+
     const { theme, systemTheme } = useTheme();
     const searchParams = useSearchParams();
-
-    // Global State
-    const { code, setCode, roomCode, setRoomCode } = useGameStore();
 
     const [mounted, setMounted] = useState(false);
     const [activeTab, setActiveTab] = useState<'problem' | 'leaderboard'>('problem');
     const [language, setLanguage] = useState(LANGUAGES[0]);
     const [isLangOpen, setIsLangOpen] = useState(false);
+    // State for the live countdown timer, starting at 15 minutes (900 seconds)
+    const [timeRemaining, setTimeRemaining] = useState(900);
+
+    // Determine if the current user is the winner
+    const isWinner = useMemo(() => winnerId === userDisplayName, [winnerId, userDisplayName]);
 
     // Derive Game State from URL
     const urlRoom = searchParams.get('room');
@@ -54,9 +73,23 @@ export default function Arena() {
     const currentTheme = theme === 'system' ? systemTheme : theme;
     const isDark = currentTheme === 'dark';
 
-    // 1. Initialize & Connect to Room on Load
+    // --- Initializers ---
+
+    // 1. Initialize & Connect to Room on Load + Select Problem
     useEffect(() => {
         setMounted(true);
+        setWinnerId(null); // Reset winner on component load
+
+        // Randomly select a problem if not already set (for solo/host)
+        if (!currentProblem) {
+            const randomIndex = Math.floor(Math.random() * PROBLEM_SET.length);
+            const initialProblem = PROBLEM_SET[randomIndex];
+            setCurrentProblem(initialProblem);
+
+            // Set initial code for the selected language
+            const initialCode = initialProblem.starterCode[language.id as keyof typeof initialProblem.starterCode];
+            setCode(initialCode);
+        }
 
         // If URL has a room but Store doesn't, sync them
         if (urlRoom && !roomCode) {
@@ -64,51 +97,165 @@ export default function Arena() {
             if (!socket.connected) {
                 socket.connect();
             }
-            socket.emit("join_room", urlRoom);
-        }
-    }, [urlRoom, roomCode, setRoomCode]);
+            socket.emit("join_room", { roomCode: urlRoom, displayName: userDisplayName });
 
-    // 2. Real-Time Code Sync Listener
+            // Request problem state from server upon joining
+            socket.emit("request_problem_state", urlRoom);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [urlRoom, roomCode, setRoomCode, setCurrentProblem, setCode, setWinnerId, language.id]);
+
+    // 2. Timer Logic
+    useEffect(() => {
+        // Only run timer if not in test mode AND game is not won
+        if (isTestMode || winnerId) return;
+
+        const timerId = setInterval(() => {
+            setTimeRemaining(prevTime => {
+                if (prevTime <= 1) {
+                    clearInterval(timerId);
+                    setRunning(false);
+                    setOutput("Time's up! The match has ended.");
+                    return 0;
+                }
+                return prevTime - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timerId);
+    }, [isTestMode, winnerId, setRunning, setOutput]);
+
+    // 3. Real-Time Code Sync Listener & Game End Listener
     useEffect(() => {
         if (!isPvP) return;
 
         // Listen for code changes from opponent
         socket.on("receive_code", (newCode: string) => {
-            // console.log("Received update:", newCode); // Uncomment for debugging
             setCode(newCode);
         });
 
+        // Listener for when a player solves the problem
+        socket.on("game_ended", (data: { winnerId: string, mmrChange: number }) => {
+            setWinnerId(data.winnerId);
+            setRunning(false);
+
+            if (data.winnerId === userDisplayName) {
+                setOutput(`🏆 VICTORY! You solved the problem first and gained ${data.mmrChange} MMR!`);
+            } else {
+                // Determine if this user won or lost MMR (mock logic: winner +25, loser -10)
+                const displayMMR = data.winnerId === userDisplayName ? `+${data.mmrChange}` : `${data.mmrChange}`;
+                setOutput(`🚨 MATCH ENDED: ${data.winnerId} solved the problem first. Your MMR change: ${displayMMR}`);
+            }
+        });
+
+        // Listener for syncing problem state when joining an existing room
+        socket.on("receive_problem_state", (data: { problemId: string, winnerId: string | null }) => {
+            const problem = PROBLEM_SET.find(p => p.id === data.problemId);
+            if (problem) {
+                setCurrentProblem(problem);
+                // Reset code based on the loaded problem's boilerplate for the current language
+                const currentLangId = language.id as keyof typeof problem.starterCode;
+                const initialCode = problem.starterCode[currentLangId] || problem.starterCode.javascript;
+                setCode(initialCode);
+            }
+            setWinnerId(data.winnerId);
+        });
+
+        socket.on("submission_rejected", (message: string) => {
+            setRunning(false);
+            setOutput(`Submission Rejected by Server: ${message}`);
+        });
+
+
         return () => {
             socket.off("receive_code");
+            socket.off("game_ended");
+            socket.off("receive_problem_state");
+            socket.off("submission_rejected");
         };
-    }, [isPvP, setCode]);
+    }, [isPvP, setCode, setWinnerId, setCurrentProblem, setOutput, setRunning, userDisplayName, language.id]);
 
-    // 3. Handle Typing (Broadcast to others)
+    // 4. Handle Typing (Broadcast to others)
     const handleEditorChange = (value: string | undefined) => {
         const newCode = value || "";
         setCode(newCode);
 
-        // IMPROVED: Check both store roomCode AND urlRoom for safety
         if (isPvP && (roomCode || urlRoom)) {
             socket.emit("code_change", { room: roomCode || urlRoom, code: newCode });
         }
     };
 
-    // 4. Handle Language Switch
+    // 5. Handle Language Switch
     const handleLanguageChange = (langId: string) => {
         const selected = LANGUAGES.find(l => l.id === langId) || LANGUAGES[0];
         setLanguage(selected);
-        const newCode = BOILERPLATES[langId];
-        setCode(newCode);
+
+        // Use the current problem's boilerplate or fallback to default
+        const boilerplate = currentProblem ?
+            currentProblem.starterCode[langId as keyof typeof currentProblem.starterCode] || '' :
+            '// Code boilerplate not available for this language/problem.';
+
+        setCode(boilerplate);
         setIsLangOpen(false);
 
-        // IMPROVED: Broadcast language change reset
+        // Broadcast language change reset (which triggers code sync)
         if (isPvP && (roomCode || urlRoom)) {
-            socket.emit("code_change", { room: roomCode || urlRoom, code: newCode });
+            socket.emit("code_change", { room: roomCode || urlRoom, code: boilerplate });
         }
     };
 
-    if (!mounted) return null;
+    // 6. Handle Run Button Logic
+    const handleRun = () => {
+        if (isRunning || winnerId || timeRemaining === 0) return;
+
+        setRunning(true);
+        setOutput(`Executing your code (Language: ${language.name})...`);
+
+        // Simulating the Judge running the code
+        setTimeout(() => {
+            setRunning(false);
+            if (isMockSolutionCorrect(code)) {
+                setOutput(`✅ Execution Successful for Sample 1. Time: 1ms, Memory: 8MB.
+            
+Output: ${currentProblem?.output || 'No output data.'}`);
+            } else {
+                setOutput(`❌ Execution Failed for Sample 1.
+Error: Solution timed out or failed a mock test case.`);
+            }
+        }, 1200);
+    };
+
+    // 7. Handle Submit Button Logic
+    const handleSubmit = () => {
+        if (isRunning || winnerId || timeRemaining === 0) return;
+
+        // Perform local mock check first
+        if (!isMockSolutionCorrect(code)) {
+            setOutput("❌ Submission Rejected. Solution failed local mock check. Please fix errors before submitting.");
+            return;
+        }
+
+        setRunning(true);
+        setOutput("Submitting solution to the Judge System. Awaiting official verdict...");
+
+        if (isTestMode) {
+            // Mock delay for solo mode
+            setTimeout(() => {
+                setRunning(false);
+                setOutput(`🎉 Submission Accepted in Diagnostic Mode! Passed mock tests.`);
+            }, 1500);
+        } else if (isPvP && currentProblem) {
+            // Emit event to server to handle game-ending logic
+            socket.emit("submit_solution", {
+                room: roomCode || urlRoom,
+                problemId: currentProblem.id,
+                submitterId: userDisplayName
+            });
+        }
+    };
+
+
+    if (!mounted || !currentProblem) return null;
 
     return (
         <div className="flex flex-col h-screen bg-background text-foreground p-3 md:p-4 gap-4 overflow-hidden font-sans selection:bg-primary/20">
@@ -122,17 +269,18 @@ export default function Arena() {
 
                     <div className="flex flex-col justify-center">
                         <h1 className="text-sm font-bold uppercase tracking-tight flex items-center gap-3">
-                            Reverse String
-                            <span className="px-1.5 py-0.5 border border-border bg-secondary/50 text-[10px] text-muted-foreground font-bold uppercase tracking-wider rounded-sm">Easy</span>
+                            {currentProblem.title}
+                            <span className="px-1.5 py-0.5 border border-border bg-secondary/50 text-[10px] text-muted-foreground font-bold uppercase tracking-wider rounded-sm">{currentProblem.difficulty}</span>
                         </h1>
 
                         {/* Connection Status */}
                         <div className="text-[10px] text-muted-foreground font-medium flex items-center gap-2">
                             {isPvP ? (
                                 <>
-                                    {/* IMPROVED: Added pulse animation */}
-                                    <Signal className="w-3 h-3 text-emerald-500 animate-pulse" />
-                                    <span className="text-emerald-600 font-bold">CONNECTED :: ROOM {roomCode || urlRoom}</span>
+                                    <Signal className={`w-3 h-3 ${winnerId ? 'text-red-500' : 'text-emerald-500 animate-pulse'}`} />
+                                    <span className={`${winnerId ? 'text-red-600 font-bold' : 'text-emerald-600 font-bold'}`}>
+                                        {winnerId ? `MATCH ENDED (${winnerId} WON)` : `CONNECTED :: ROOM ${roomCode || urlRoom}`}
+                                    </span>
                                 </>
                             ) : (
                                 <>
@@ -144,10 +292,15 @@ export default function Arena() {
                     </div>
                 </div>
 
-                {/* Avatar */}
+                {/* Avatar / Winner Badge */}
                 <div className="flex items-center gap-4">
+                    {isWinner && (
+                        <div className="flex items-center gap-2 text-primary font-bold text-sm bg-primary/10 px-3 py-1 rounded-full animate-in fade-in zoom-in-90 duration-500">
+                            <Award className="w-4 h-4 fill-primary text-primary" /> Winner!
+                        </div>
+                    )}
                     <div className="h-8 w-8 bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold rounded-md shadow-sm">
-                        D
+                        {userDisplayName.charAt(0)}
                     </div>
                 </div>
             </header>
@@ -168,17 +321,17 @@ export default function Arena() {
                         {activeTab === 'problem' && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-left-2 duration-300">
                                 <div className="prose prose-sm dark:prose-invert text-sm leading-relaxed text-muted-foreground">
-                                    <p className="mb-4 text-foreground">Write a function that reverses a string. The input string is given as an array of characters <code>s</code>.</p>
-                                    <p>You must do this by modifying the input array <strong>in-place</strong> with <code>O(1)</code> extra memory.</p>
+                                    {/* Dynamic Problem Description */}
+                                    <div dangerouslySetInnerHTML={{ __html: currentProblem.description }} />
 
                                     <div className="mt-6 border border-border bg-secondary/20 rounded-md p-4 grid gap-3 font-mono text-xs">
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">Input:</span>
-                                            <span className="text-foreground">s = ["h","e","l","l","o"]</span>
+                                            <span className="text-foreground">{currentProblem.input}</span>
                                         </div>
                                         <div className="flex justify-between border-t border-border pt-2">
                                             <span className="text-muted-foreground">Output:</span>
-                                            <span className="text-primary font-bold">["o","l","l","e","h"]</span>
+                                            <span className="text-primary font-bold">{currentProblem.output}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +350,7 @@ export default function Arena() {
                     </div>
                 </div>
 
-                {/* RIGHT PANEL: Editor */}
+                {/* RIGHT PANEL: Editor & Console */}
                 <div className="flex-1 flex flex-col border border-border bg-card shadow-sm overflow-hidden relative rounded-lg">
                     {/* Toolbar */}
                     <div className="h-12 flex items-center justify-between px-4 border-b border-border bg-card">
@@ -219,12 +372,12 @@ export default function Arena() {
                             )}
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground"><Clock className="w-3.5 h-3.5" /><span>00:14:32</span></div>
+                            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground"><Clock className="w-3.5 h-3.5" /><span>{formatTime(timeRemaining)}</span></div>
                         </div>
                     </div>
 
                     {/* Monaco Editor */}
-                    <div className="flex-1 relative bg-[#1e1e1e]">
+                    <div className="flex-1 relative bg-[#1e1e1e] overflow-hidden">
                         <Editor
                             height="100%"
                             language={language.id === 'cpp' ? 'cpp' : language.id}
@@ -244,10 +397,50 @@ export default function Arena() {
                         />
                     </div>
 
+                    {/* Console Panel */}
+                    <div className="h-40 border-t border-border bg-background flex flex-col p-3 shrink-0">
+                        <div className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                            Console
+                        </div>
+                        <pre className="flex-1 text-xs font-mono overflow-y-auto text-foreground/80 whitespace-pre-wrap">
+                            {output}
+                        </pre>
+                    </div>
+
                     {/* Actions */}
                     <div className="absolute bottom-6 right-6 flex gap-3 z-10">
-                        <button className="flex items-center gap-2 px-5 py-2.5 bg-card text-foreground text-xs font-bold uppercase tracking-wider border border-border shadow-sm hover:bg-secondary transition-all rounded-md"><Play className="w-3 h-3 fill-current" /> Run</button>
-                        <button className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-xs font-bold uppercase tracking-wider shadow-lg hover:opacity-90 transition-all rounded-md"><Send className="w-3 h-3" /> Submit</button>
+                        <button
+                            onClick={handleRun}
+                            disabled={isRunning || winnerId !== null || timeRemaining === 0}
+                            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider border shadow-sm rounded-md transition-all 
+                                ${isRunning || winnerId !== null || timeRemaining === 0 ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'bg-card text-foreground border-border hover:bg-secondary'}`}
+                        >
+                            {isRunning ? (
+                                <>
+                                    <Loader2 className="w-3 h-3 animate-spin" /> Running...
+                                </>
+                            ) : (
+                                <>
+                                    <Play className="w-3 h-3 fill-current" /> Run
+                                </>
+                            )}
+                        </button>
+                        <button
+                            onClick={handleSubmit}
+                            disabled={isRunning || winnerId !== null || timeRemaining === 0}
+                            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-lg rounded-md transition-all 
+                                ${isRunning || winnerId !== null || timeRemaining === 0 ? 'bg-primary/50 text-primary-foreground/50 cursor-not-allowed' : 'bg-primary text-primary-foreground hover:opacity-90'}`}
+                        >
+                            {isRunning ? (
+                                <>
+                                    <Loader2 className="w-3 h-3 animate-spin" /> Submitting...
+                                </>
+                            ) : (
+                                <>
+                                    <Send className="w-3 h-3" /> Submit
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
             </div>
