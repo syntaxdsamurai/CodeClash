@@ -1,0 +1,131 @@
+/* 1. Import Fonts: Space Grotesk (Headers), JetBrains Mono (Code) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- LIGHT MODE: "The Architect" (Clean, Graphite, Stone) --- */
+
+    /* Warm Stone White (Not harsh white) */
+    --background: 40 10% 98%;
+    /* Deep Graphite (Almost black, softer than pure black) */
+    --foreground: 240 5% 15%;
+
+    /* Pure White Panels */
+    --card: 0 0% 100%;
+    --card-foreground: 240 5% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 5% 15%;
+
+    /* Primary: Deep Charcoal / Graphite (Replaces the "Blue") */
+    --primary: 240 5% 15%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary: Light Mist Grey */
+    --secondary: 240 5% 94%;
+    --secondary-foreground: 240 5% 15%;
+
+    /* Muted: Subtle Grey */
+    --muted: 240 5% 94%;
+    --muted-foreground: 240 4% 46%;
+
+    /* Accent: Burnt Clay (Subtle warm highlight) */
+    --accent: 15 20% 94%;
+    --accent-foreground: 240 5% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Border: Crisp Grey */
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 240 5% 15%;
+
+    /* Radius: Slightly technical but approachable */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* --- DARK MODE: "The Terminal" (Deep void, Amber/Green glow) --- */
+
+    /* Deep Void Black */
+    --background: 0 0% 7%;
+    /* Retro Terminal Amber/White */
+    --foreground: 45 20% 90%;
+
+    /* Dark Panels */
+    --card: 0 0% 9%;
+    --card-foreground: 45 20% 90%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 45 20% 90%;
+
+    /* Primary: Electric Amber (High Contrast) */
+    --primary: 45 100% 50%;
+    --primary-foreground: 0 0% 10%;
+
+    /* Secondary: Dark Grey Bezel */
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 45 20% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 45 20% 90%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 45 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Space Grotesk', sans-serif;
+    /* Subtle Grain Texture */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* Code & Monospace Elements */
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* --- ANIMATION: Music Bar Equalizer (For your name hover) --- */
+@keyframes equalize {
+  0% { height: 3px; }
+  50% { height: 12px; }
+  100% { height: 3px; }
+}
+
+.music-bar {
+  display: inline-block;
+  width: 3px;
+  background-color: currentColor;
+  animation: equalize 1s infinite;
+  border-radius: 99px;
+}
+
+/* Stagger animations for the 3 bars */
+.music-bar:nth-child(1) { animation-delay: 0.0s; height: 6px; }
+.music-bar:nth-child(2) { animation-delay: 0.2s; height: 10px; }
+.music-bar:nth-child(3) { animation-delay: 0.4s; height: 4px; }
+
+/* Pause when not hovering (optional, currently always on or use group-hover) */
+.group:not(:hover) .music-bar {
+  animation-play-state: paused;
+  height: 4px; /* Resting state */
+}
