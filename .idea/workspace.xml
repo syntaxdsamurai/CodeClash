@@ -4,7 +4,110 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4adb7625-acac-4ad4-a60c-f41238f3742c" name="Changes" comment="" />
+    <list default="true" id="4adb7625-acac-4ad4-a60c-f41238f3742c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/components/ui/AssetTicker.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/components/ui/MainChart.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/components/ui/PortfolioCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/hooks/useCryptoData.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/lib/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BullRun/bullrun-dashboard/tailwind.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/socket.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/types.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack 5th sem/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/comment.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/comment.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/post.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/controllers/post.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/middleware/auth.middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/middleware/auth.middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/comment.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/comment.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/post.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/post.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/user.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/models/user.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/auth.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/auth.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/comment.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/comment.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/post.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/routes/post.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/AuthForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/AuthForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Comment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Comment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/CommentList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/CommentList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Layout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/components/PostCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/context/AuthContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/context/AuthContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/hooks/useAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/hooks/useAuth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/CreatePostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/CreatePostPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/EditPostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/EditPostPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/HomePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/HomePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/PostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/PostPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/ProfilePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/ProfilePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/RegisterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Blog Platform/frontend/src/pages/RegisterPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/models/todo.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/models/todo.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/routes/todos.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/routes/todos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Fullstack Projects/Todo List/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/data/appointments.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/data/doctors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/data/patients.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/AppointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/AppointmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/BillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/BillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/DoctorDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/DoctorDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/MedicalRecordDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/MedicalRecordDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/PatientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/dao/PatientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Appointments.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Appointments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Bill.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Bill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Bills.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Bills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Doctors.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Doctors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/MedicalRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/MedicalRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/MedicalRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/MedicalRecords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Patients.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/model/Patients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddAppointmentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddAppointmentServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddDoctorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddDoctorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddMedicalRecordServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/AddMedicalRecordServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/DeleteDoctorServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/DeleteDoctorServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/DeletePatientServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/DeletePatientServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/LogoutServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/LogoutServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PatientCancelAppointmentServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PatientCancelAppointmentServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PatientRegisterServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PatientRegisterServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PayBillServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/PayBillServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/UpdateAppointmentStatusServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/UpdateAppointmentStatusServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/UpdatePatientProfileServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/java/com/hospital/servlets/UpdatePatientProfileServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/add-record.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/add-record.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/admin-panel.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/admin-panel.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/edit-patient-profile.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/edit-patient-profile.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-dashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-dashboard.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-registration.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java Project/src/main/webapp/patient-registration.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/components/game/Arena.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/components/game/Arena.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/components/game/MatchDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/components/game/MatchDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/lib/socket.ts" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/lib/socket.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/store/useGameStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/store/useGameStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code-clash/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/code-clash/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sentinel/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sentinel/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sentinel/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Sentinel/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/components/ui/BentoGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/components/ui/BentoGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/data/resume.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/data/resume.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/postcss.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/tailwind.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Portfolio/utils/cn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../Portfolio/utils/cn.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +135,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/dhruv/OneDrive/Documents/coding/Portfolio/CodeClash",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -66,6 +169,7 @@
       <workItem from="1765815363192" duration="1857000" />
       <workItem from="1765817929453" duration="6815000" />
       <workItem from="1765825275430" duration="241000" />
+      <workItem from="1765825556004" duration="4205000" />
     </task>
     <servers />
   </component>

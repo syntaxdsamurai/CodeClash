@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+// ADDED: ArrowUpRight to the imports
 import {
-    ArrowUpRight, Terminal, Cpu, Zap, Globe,
-    LayoutGrid, Activity
+    Terminal, Cpu, Zap, Globe,
+    LayoutGrid, Bot, ArrowUpRight
 } from "lucide-react";
 import MatchDialog from "@/components/game/MatchDialog";
+import { useRouter } from "next/navigation";
 
 // --- Sub-Component: The Music Bar Animation ---
 const MusicBars = () => (
@@ -17,6 +19,7 @@ const MusicBars = () => (
 );
 
 export default function LandingPage() {
+    const router = useRouter();
     const [isMatchOpen, setIsMatchOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -38,9 +41,9 @@ export default function LandingPage() {
 
                 {/* Name with Hover Animation */}
                 <div className="group flex items-center gap-3 cursor-default">
-           <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-             Engineered by
-           </span>
+                   <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                     Engineered by
+                   </span>
                     <div className="flex items-end gap-2 px-3 py-1.5 rounded-md bg-secondary/50 group-hover:bg-secondary transition-colors">
                         <span className="font-bold text-sm">Dhruv</span>
                         <MusicBars />
@@ -69,13 +72,15 @@ export default function LandingPage() {
                             A real-time competitive coding environment.
                             Benchmark your runtime against the world's best engineers.
                         </p>
+
+                        {/* HERO STATS: Technical Specs (Meaningful) */}
                         <div className="flex items-center gap-4 text-sm font-medium">
                             <div className="flex items-center gap-2">
-                                <Zap className="w-4 h-4" /> 24ms Latency
+                                <Cpu className="w-4 h-4 text-primary" /> Next.js 16 Powered
                             </div>
                             <span className="text-border">/</span>
                             <div className="flex items-center gap-2">
-                                <Globe className="w-4 h-4" /> Global Leaderboard
+                                <Zap className="w-4 h-4 text-primary" /> React 19 Core
                             </div>
                         </div>
                     </div>
@@ -84,7 +89,7 @@ export default function LandingPage() {
                 {/* ACTION BLOCK: The "Enter" Interface */}
                 <div className="md:col-span-4 flex flex-col gap-6">
 
-                    {/* Primary Action */}
+                    {/* Primary Action: Enter Arena */}
                     <button
                         onClick={() => setIsMatchOpen(true)}
                         className="flex-1 bg-primary text-primary-foreground rounded-xl flex flex-col items-center justify-center gap-4 group hover:opacity-90 transition-all shadow-xl relative overflow-hidden"
@@ -99,17 +104,22 @@ export default function LandingPage() {
                         </div>
                     </button>
 
-                    {/* Secondary Stats Card */}
-                    <div className="h-40 border border-border bg-card rounded-xl p-8 flex flex-col justify-center hover:border-primary/30 transition-colors group cursor-pointer">
+                    {/* Secondary Action: Quick Diagnostic */}
+                    <button
+                        onClick={() => router.push('/arena?mode=test')}
+                        className="h-40 border border-border bg-card rounded-xl p-8 flex flex-col justify-center hover:border-primary/30 transition-colors group cursor-pointer text-left"
+                    >
                         <div className="flex justify-between items-start mb-2">
-                            <Activity className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                            <Bot className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
                             <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                         </div>
                         <div>
-                            <div className="text-3xl font-bold tabular-nums">1,204</div>
-                            <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider mt-1">Active Developers</div>
+                            <div className="text-2xl font-bold tracking-tight">Run Diagnostic</div>
+                            <div className="text-xs text-muted-foreground font-medium uppercase tracking-wider mt-1">
+                                Solo Sandbox Mode
+                            </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 {/* FEATURES STRIP */}
@@ -131,14 +141,13 @@ export default function LandingPage() {
 
             </main>
 
-            {/* 3. FOOTER: Simple Credential */}
-            <footer className="h-14 border border-border bg-card rounded-xl flex items-center justify-between px-8 text-xs font-medium text-muted-foreground">
-                <span>© 2025 CodeClash Systems</span>
-                <div className="flex gap-6">
-                    <span className="hover:text-foreground cursor-pointer transition-colors">Privacy</span>
-                    <span className="hover:text-foreground cursor-pointer transition-colors">Terms</span>
-                    <span className="hover:text-foreground cursor-pointer transition-colors">Status</span>
-                </div>
+            {/* 3. FOOTER: Trimmed & Animated */}
+            <footer className="h-14 border border-border bg-card rounded-xl flex items-center justify-center px-8 text-xs font-medium text-muted-foreground">
+                <a href="https://github.com/syntaxdsamurai" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-1 hover:text-foreground transition-colors">
+                    <span>© 2025 CodeClash Systems | Engineered by Dhruv</span>
+                    <span className="text-primary font-bold group-hover:hidden animate-pulse">_</span>
+                    <span className="text-primary font-bold hidden group-hover:inline-block">;)</span>
+                </a>
             </footer>
 
             <MatchDialog isOpen={isMatchOpen} onClose={() => setIsMatchOpen(false)} />

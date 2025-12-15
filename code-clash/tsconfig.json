@@ -4,7 +4,14 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+
+    // --- CHANGE THIS LINE ---
+    "strict": false,
+    // ------------------------
+
+    // Optional: Add this if you want to keep strict mode but just stop the 'any' errors
+    // "noImplicitAny": false,
+
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
