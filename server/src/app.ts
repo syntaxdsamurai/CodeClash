@@ -2,24 +2,24 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-import dotenv from "dotenv"; // Import dotenv
+import dotenv from "dotenv";
 import { setupSocket } from "./socket";
 
-dotenv.config(); // Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
 
-// 1. Setup CORS to allow frontend connection
+// 1. Setup CORS to allow ANY frontend connection (Fixes the issue)
 app.use(cors({
-    origin: "http://localhost:3000", // Trust your Next.js app
+    origin: "*",
     methods: ["GET", "POST"]
 }));
 
-// 2. Initialize Socket.io
+// 2. Initialize Socket.io with the same CORS rule
 const io = new Server(httpServer, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "*", // Allow connection from Vercel
         methods: ["GET", "POST"]
     }
 });
@@ -35,5 +35,5 @@ app.get("/", (req, res) => {
 // 5. Start Server
 const PORT = process.env.PORT || 4000;
 httpServer.listen(PORT, () => {
-    console.log(`\n⚡️ [SERVER]: Game Engine running on http://localhost:${PORT}`);
+    console.log(`\n⚡️ [SERVER]: Game Engine running on port ${PORT}`);
 });
